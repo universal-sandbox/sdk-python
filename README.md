@@ -13,7 +13,7 @@ pip install universal-sandbox
 ```python
 from universal_sandbox import Sandbox
 
-# Initialize client (base_url defaults to https://api.sandbox.ai-infra.org)
+# Initialize client
 sandbox = Sandbox(token="your-token")
 
 # Check API health
@@ -24,20 +24,23 @@ print(health.status)
 sb = sandbox.code_interpreter.create(provider="e2b", timeout_minutes=5)
 print(f"Sandbox ID: {sb.id}")
 
+# Create an all-in-one sandbox (only Volcengine supported)
+aio = sandbox.aio.create(provider="volcengine", timeout_minutes=10)
+
 # Execute code
 result = sandbox.sandboxes.execute(sb.id, command="print('Hello, World!')")
 print(result.stdout)
 
 # Get sandbox info
-info = sandbox.sandboxes.get_sandbox(sb.id)
+info = sandbox.sandboxes.get(sb.id)
 print(f"Status: {info.status}")
 
 # List all sandboxes
-sandbox_list = sandbox.sandboxes.list_sandboxes()
+sandbox_list = sandbox.sandboxes.list()
 print(f"Total: {sandbox_list.total}")
 
 # Delete sandbox
-sandbox.sandboxes.delete_sandbox(sb.id)
+sandbox.sandboxes.delete(sb.id)
 ```
 
 ## API to SDK Mapping
@@ -50,9 +53,9 @@ sandbox.sandboxes.delete_sandbox(sb.id)
 | `POST /sandboxes/code-interpreter` | `sandbox.code_interpreter.create()`  |
 | `POST /sandboxes/browser`          | `sandbox.browser.create()`           |
 | `POST /sandboxes/aio`              | `sandbox.aio.create()`               |
-| `GET /sandboxes`                   | `sandbox.sandboxes.list_sandboxes()` |
-| `GET /sandboxes/{id}`              | `sandbox.sandboxes.get_sandbox()`    |
-| `DELETE /sandboxes/{id}`           | `sandbox.sandboxes.delete_sandbox()` |
+| `GET /sandboxes`                   | `sandbox.sandboxes.list()` |
+| `GET /sandboxes/{id}`              | `sandbox.sandboxes.get()`    |
+| `DELETE /sandboxes/{id}`           | `sandbox.sandboxes.delete()` |
 | `POST /sandboxes/{id}/execute`     | `sandbox.sandboxes.execute()`        |
 | `POST /admin/tokens`               | `sandbox.tokens.issue()`             |
 | `POST /admin/tokens/{prefix}/revoke` | `sandbox.tokens.revoke()`          |
@@ -81,13 +84,13 @@ sandbox = Sandbox(
 
 - `sandbox.code_interpreter.create(provider, timeout_minutes, region, metadata)` - Create code interpreter
 - `sandbox.browser.create(provider, timeout_minutes, region, metadata)` - Create browser sandbox
-- `sandbox.aio.create(provider, timeout_minutes, region, metadata)` - Create all-in-one sandbox
+- `sandbox.aio.create(provider, timeout_minutes, region, metadata)` - Create all-in-one sandbox (only supports `provider="volcengine"`)
 
 ### Sandbox Management
 
-- `sandbox.sandboxes.list_sandboxes()` - List all sandboxes
-- `sandbox.sandboxes.get_sandbox(sandbox_id)` - Get sandbox by ID
-- `sandbox.sandboxes.delete_sandbox(sandbox_id)` - Delete a sandbox
+- `sandbox.sandboxes.list()` - List all sandboxes
+- `sandbox.sandboxes.get(sandbox_id)` - Get sandbox by ID
+- `sandbox.sandboxes.delete(sandbox_id)` - Delete a sandbox
 - `sandbox.sandboxes.execute(sandbox_id, command, timeout)` - Execute command
 
 ### Token Management (Admin)

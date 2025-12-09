@@ -24,9 +24,7 @@ class RawSandboxesClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list_sandboxes(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[SandboxListResponse]:
+    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[SandboxListResponse]:
         """
         List all sandboxes for the authenticated user.
 
@@ -60,7 +58,7 @@ class RawSandboxesClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get_sandbox(
+    def get(
         self, sandbox_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[SandboxResponse]:
         """
@@ -109,7 +107,7 @@ class RawSandboxesClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def delete_sandbox(
+    def delete(
         self, sandbox_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[DeleteResponse]:
         """
@@ -231,7 +229,7 @@ class AsyncRawSandboxesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def list_sandboxes(
+    async def list(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[SandboxListResponse]:
         """
@@ -267,7 +265,7 @@ class AsyncRawSandboxesClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def get_sandbox(
+    async def get(
         self, sandbox_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[SandboxResponse]:
         """
@@ -316,7 +314,7 @@ class AsyncRawSandboxesClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def delete_sandbox(
+    async def delete(
         self, sandbox_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[DeleteResponse]:
         """
