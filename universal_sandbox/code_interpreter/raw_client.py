@@ -6,9 +6,11 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
+from ..types.execute_response import ExecuteResponse
 from ..types.http_validation_error import HttpValidationError
 from ..types.sandbox_provider import SandboxProvider
 from ..types.sandbox_response import SandboxResponse
@@ -96,6 +98,74 @@ class RawCodeInterpreterClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def execute(
+        self,
+        sandbox_id: str,
+        *,
+        command: str,
+        timeout: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[ExecuteResponse]:
+        """
+        Execute a command in a code interpreter sandbox.
+
+        Parameters
+        ----------
+        sandbox_id : str
+
+        command : str
+            Command or code to execute
+
+        timeout : typing.Optional[int]
+            Execution timeout in seconds
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ExecuteResponse]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"sandboxes/code-interpreter/{jsonable_encoder(sandbox_id)}/execute",
+            method="POST",
+            json={
+                "command": command,
+                "timeout": timeout,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ExecuteResponse,
+                    parse_obj_as(
+                        type_=ExecuteResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        parse_obj_as(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawCodeInterpreterClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -156,6 +226,74 @@ class AsyncRawCodeInterpreterClient:
                     SandboxResponse,
                     parse_obj_as(
                         type_=SandboxResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        parse_obj_as(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def execute(
+        self,
+        sandbox_id: str,
+        *,
+        command: str,
+        timeout: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[ExecuteResponse]:
+        """
+        Execute a command in a code interpreter sandbox.
+
+        Parameters
+        ----------
+        sandbox_id : str
+
+        command : str
+            Command or code to execute
+
+        timeout : typing.Optional[int]
+            Execution timeout in seconds
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ExecuteResponse]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"sandboxes/code-interpreter/{jsonable_encoder(sandbox_id)}/execute",
+            method="POST",
+            json={
+                "command": command,
+                "timeout": timeout,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ExecuteResponse,
+                    parse_obj_as(
+                        type_=ExecuteResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

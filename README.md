@@ -2,6 +2,8 @@
 
 Python SDK for Universal Sandbox API.
 
+📖 **[API Documentation](https://api.sandbox.ai-infra.org/docs)**
+
 ## Installation
 
 ```bash
@@ -10,22 +12,23 @@ pip install universal-sandbox
 
 ## Usage
 
+For more detailed usage, please refer to [example.py](./example.py)
+
 ```python
 from universal_sandbox import Sandbox
 
 # Initialize client
-sandbox = Sandbox(token="your-token")
+# Get Sandbox API Token from https://ai-infra.org/
+sandbox = Sandbox(token="sandbox-api-token")
 
 # Check API health
 health = sandbox.check_health()
 print(health.status)
 
 # Create a code interpreter sandbox
-sb = sandbox.code_interpreter.create(provider="e2b", timeout_minutes=5)
+sb = sandbox.code_interpreter.create()
 print(f"Sandbox ID: {sb.id}")
-
-# Create an all-in-one sandbox (only Volcengine supported)
-aio = sandbox.aio.create(provider="volcengine", timeout_minutes=10)
+print(f"Provider: {sb.provider}")
 
 # Execute code
 result = sandbox.sandboxes.execute(sb.id, command="print('Hello, World!')")

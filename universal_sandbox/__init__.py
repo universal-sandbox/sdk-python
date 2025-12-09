@@ -5,6 +5,7 @@
 from .types import (
     CreateSandboxRequest,
     DeleteResponse,
+    ExecuteRequest,
     ExecuteResponse,
     HealthStatus,
     HttpValidationError,
@@ -26,6 +27,7 @@ __all__ = [
     "AsyncSandbox",
     "CreateSandboxRequest",
     "DeleteResponse",
+    "ExecuteRequest",
     "ExecuteResponse",
     "HealthStatus",
     "HttpValidationError",
