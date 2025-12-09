@@ -4,6 +4,7 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.execute_response import ExecuteResponse
 from ..types.sandbox_provider import SandboxProvider
 from ..types.sandbox_response import SandboxResponse
 from .raw_client import AsyncRawCodeInterpreterClient, RawCodeInterpreterClient
@@ -76,6 +77,52 @@ class CodeInterpreterClient:
             timeout_minutes=timeout_minutes,
             metadata=metadata,
             request_options=request_options,
+        )
+        return _response.data
+
+    def execute(
+        self,
+        sandbox_id: str,
+        *,
+        command: str,
+        timeout: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ExecuteResponse:
+        """
+        Execute a command in a code interpreter sandbox.
+
+        Parameters
+        ----------
+        sandbox_id : str
+
+        command : str
+            Command or code to execute
+
+        timeout : typing.Optional[int]
+            Execution timeout in seconds
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ExecuteResponse
+            Successful Response
+
+        Examples
+        --------
+        from ai_infra import Sandbox
+
+        client = Sandbox(
+            token="YOUR_TOKEN",
+        )
+        client.code_interpreter.execute(
+            sandbox_id="sandbox_id",
+            command="command",
+        )
+        """
+        _response = self._raw_client.execute(
+            sandbox_id, command=command, timeout=timeout, request_options=request_options
         )
         return _response.data
 
@@ -152,5 +199,59 @@ class AsyncCodeInterpreterClient:
             timeout_minutes=timeout_minutes,
             metadata=metadata,
             request_options=request_options,
+        )
+        return _response.data
+
+    async def execute(
+        self,
+        sandbox_id: str,
+        *,
+        command: str,
+        timeout: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ExecuteResponse:
+        """
+        Execute a command in a code interpreter sandbox.
+
+        Parameters
+        ----------
+        sandbox_id : str
+
+        command : str
+            Command or code to execute
+
+        timeout : typing.Optional[int]
+            Execution timeout in seconds
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ExecuteResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from ai_infra import AsyncSandbox
+
+        client = AsyncSandbox(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.code_interpreter.execute(
+                sandbox_id="sandbox_id",
+                command="command",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.execute(
+            sandbox_id, command=command, timeout=timeout, request_options=request_options
         )
         return _response.data
