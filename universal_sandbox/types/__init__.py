@@ -8,7 +8,6 @@ from .execute_response import ExecuteResponse
 from .health_status import HealthStatus
 from .http_validation_error import HttpValidationError
 from .limits_response import LimitsResponse
-from .regions_response import RegionsResponse
 from .sandbox_list_response import SandboxListResponse
 from .sandbox_provider import SandboxProvider
 from .sandbox_response import SandboxResponse
@@ -24,7 +23,6 @@ __all__ = [
     "HealthStatus",
     "HttpValidationError",
     "LimitsResponse",
-    "RegionsResponse",
     "SandboxListResponse",
     "SandboxProvider",
     "SandboxResponse",

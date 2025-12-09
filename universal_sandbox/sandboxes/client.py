@@ -29,7 +29,7 @@ class SandboxesClient:
         """
         return self._raw_client
 
-    def list_sandboxes(self, *, request_options: typing.Optional[RequestOptions] = None) -> SandboxListResponse:
+    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> SandboxListResponse:
         """
         List all sandboxes for the authenticated user.
 
@@ -50,14 +50,12 @@ class SandboxesClient:
         client = Sandbox(
             token="YOUR_TOKEN",
         )
-        client.sandboxes.list_sandboxes()
+        client.sandboxes.list()
         """
-        _response = self._raw_client.list_sandboxes(request_options=request_options)
+        _response = self._raw_client.list(request_options=request_options)
         return _response.data
 
-    def get_sandbox(
-        self, sandbox_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> SandboxResponse:
+    def get(self, sandbox_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> SandboxResponse:
         """
         Get a specific sandbox by ID.
 
@@ -80,16 +78,14 @@ class SandboxesClient:
         client = Sandbox(
             token="YOUR_TOKEN",
         )
-        client.sandboxes.get_sandbox(
+        client.sandboxes.get(
             sandbox_id="sandbox_id",
         )
         """
-        _response = self._raw_client.get_sandbox(sandbox_id, request_options=request_options)
+        _response = self._raw_client.get(sandbox_id, request_options=request_options)
         return _response.data
 
-    def delete_sandbox(
-        self, sandbox_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> DeleteResponse:
+    def delete(self, sandbox_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> DeleteResponse:
         """
         Delete a sandbox instance.
 
@@ -112,11 +108,11 @@ class SandboxesClient:
         client = Sandbox(
             token="YOUR_TOKEN",
         )
-        client.sandboxes.delete_sandbox(
+        client.sandboxes.delete(
             sandbox_id="sandbox_id",
         )
         """
-        _response = self._raw_client.delete_sandbox(sandbox_id, request_options=request_options)
+        _response = self._raw_client.delete(sandbox_id, request_options=request_options)
         return _response.data
 
     def execute(
@@ -181,7 +177,7 @@ class AsyncSandboxesClient:
         """
         return self._raw_client
 
-    async def list_sandboxes(self, *, request_options: typing.Optional[RequestOptions] = None) -> SandboxListResponse:
+    async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> SandboxListResponse:
         """
         List all sandboxes for the authenticated user.
 
@@ -207,17 +203,15 @@ class AsyncSandboxesClient:
 
 
         async def main() -> None:
-            await client.sandboxes.list_sandboxes()
+            await client.sandboxes.list()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list_sandboxes(request_options=request_options)
+        _response = await self._raw_client.list(request_options=request_options)
         return _response.data
 
-    async def get_sandbox(
-        self, sandbox_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> SandboxResponse:
+    async def get(self, sandbox_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> SandboxResponse:
         """
         Get a specific sandbox by ID.
 
@@ -245,17 +239,17 @@ class AsyncSandboxesClient:
 
 
         async def main() -> None:
-            await client.sandboxes.get_sandbox(
+            await client.sandboxes.get(
                 sandbox_id="sandbox_id",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_sandbox(sandbox_id, request_options=request_options)
+        _response = await self._raw_client.get(sandbox_id, request_options=request_options)
         return _response.data
 
-    async def delete_sandbox(
+    async def delete(
         self, sandbox_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DeleteResponse:
         """
@@ -285,14 +279,14 @@ class AsyncSandboxesClient:
 
 
         async def main() -> None:
-            await client.sandboxes.delete_sandbox(
+            await client.sandboxes.delete(
                 sandbox_id="sandbox_id",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.delete_sandbox(sandbox_id, request_options=request_options)
+        _response = await self._raw_client.delete(sandbox_id, request_options=request_options)
         return _response.data
 
     async def execute(

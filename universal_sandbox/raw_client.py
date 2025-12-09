@@ -10,7 +10,6 @@ from .core.pydantic_utilities import parse_obj_as
 from .core.request_options import RequestOptions
 from .types.health_status import HealthStatus
 from .types.limits_response import LimitsResponse
-from .types.regions_response import RegionsResponse
 
 
 class RawSandbox:
@@ -51,7 +50,9 @@ class RawSandbox:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def list_regions(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[RegionsResponse]:
+    def list_regions(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[typing.Optional[typing.Any]]:
         """
         List available regions for all providers.
 
@@ -62,7 +63,7 @@ class RawSandbox:
 
         Returns
         -------
-        HttpResponse[RegionsResponse]
+        HttpResponse[typing.Optional[typing.Any]]
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -71,11 +72,13 @@ class RawSandbox:
             request_options=request_options,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return HttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    RegionsResponse,
+                    typing.Optional[typing.Any],
                     parse_obj_as(
-                        type_=RegionsResponse,  # type: ignore
+                        type_=typing.Optional[typing.Any],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -162,7 +165,7 @@ class AsyncRawSandbox:
 
     async def list_regions(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[RegionsResponse]:
+    ) -> AsyncHttpResponse[typing.Optional[typing.Any]]:
         """
         List available regions for all providers.
 
@@ -173,7 +176,7 @@ class AsyncRawSandbox:
 
         Returns
         -------
-        AsyncHttpResponse[RegionsResponse]
+        AsyncHttpResponse[typing.Optional[typing.Any]]
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -182,11 +185,13 @@ class AsyncRawSandbox:
             request_options=request_options,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return AsyncHttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    RegionsResponse,
+                    typing.Optional[typing.Any],
                     parse_obj_as(
-                        type_=RegionsResponse,  # type: ignore
+                        type_=typing.Optional[typing.Any],  # type: ignore
                         object_=_response.json(),
                     ),
                 )

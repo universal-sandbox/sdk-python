@@ -14,7 +14,6 @@ from .sandboxes.client import AsyncSandboxesClient, SandboxesClient
 from .tokens.client import AsyncTokensClient, TokensClient
 from .types.health_status import HealthStatus
 from .types.limits_response import LimitsResponse
-from .types.regions_response import RegionsResponse
 
 
 class Sandbox:
@@ -126,7 +125,7 @@ class Sandbox:
         _response = self._raw_client.check_health(request_options=request_options)
         return _response.data
 
-    def list_regions(self, *, request_options: typing.Optional[RequestOptions] = None) -> RegionsResponse:
+    def list_regions(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Optional[typing.Any]:
         """
         List available regions for all providers.
 
@@ -137,7 +136,7 @@ class Sandbox:
 
         Returns
         -------
-        RegionsResponse
+        typing.Optional[typing.Any]
             Successful Response
 
         Examples
@@ -296,7 +295,9 @@ class AsyncSandbox:
         _response = await self._raw_client.check_health(request_options=request_options)
         return _response.data
 
-    async def list_regions(self, *, request_options: typing.Optional[RequestOptions] = None) -> RegionsResponse:
+    async def list_regions(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[typing.Any]:
         """
         List available regions for all providers.
 
@@ -307,7 +308,7 @@ class AsyncSandbox:
 
         Returns
         -------
-        RegionsResponse
+        typing.Optional[typing.Any]
             Successful Response
 
         Examples
