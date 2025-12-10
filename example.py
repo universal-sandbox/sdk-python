@@ -3,8 +3,6 @@ import os
 
 # Initialize client
 # Get Sandbox API Token from https://ai-infra.org/
-os.environ["SANDBOX_API_TOKEN"] = "pat_6e22482e_Vp0uMoiEikNZD7Lh2wNFX7cW-CzMXFI3UMKCPTGVM0k"
-
 sandbox = Sandbox(token=os.getenv("SANDBOX_API_TOKEN"))
 
 # ---------- General sandbox -------------- #
