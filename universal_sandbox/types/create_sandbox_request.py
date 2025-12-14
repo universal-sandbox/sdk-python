@@ -22,9 +22,9 @@ class CreateSandboxRequest(UniversalBaseModel):
     Preferred region for the sandbox
     """
 
-    timeout_minutes: typing.Optional[int] = pydantic.Field(default=None)
+    timeout: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Custom timeout in minutes
+    Timeout in minutes
     """
 
     metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)

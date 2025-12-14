@@ -24,12 +24,16 @@ class RawSandboxesClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[SandboxListResponse]:
+    def list(
+        self, *, include_deleted: typing.Optional[bool] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[SandboxListResponse]:
         """
         List all sandboxes for the authenticated user.
 
         Parameters
         ----------
+        include_deleted : typing.Optional[bool]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -41,6 +45,9 @@ class RawSandboxesClient:
         _response = self._client_wrapper.httpx_client.request(
             "sandboxes",
             method="GET",
+            params={
+                "include_deleted": include_deleted,
+            },
             request_options=request_options,
         )
         try:
@@ -53,6 +60,17 @@ class RawSandboxesClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        parse_obj_as(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -230,13 +248,15 @@ class AsyncRawSandboxesClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self, *, include_deleted: typing.Optional[bool] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[SandboxListResponse]:
         """
         List all sandboxes for the authenticated user.
 
         Parameters
         ----------
+        include_deleted : typing.Optional[bool]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -248,6 +268,9 @@ class AsyncRawSandboxesClient:
         _response = await self._client_wrapper.httpx_client.request(
             "sandboxes",
             method="GET",
+            params={
+                "include_deleted": include_deleted,
+            },
             request_options=request_options,
         )
         try:
@@ -260,6 +283,17 @@ class AsyncRawSandboxesClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        parse_obj_as(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

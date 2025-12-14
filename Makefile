@@ -1,4 +1,4 @@
-.PHONY: build publish
+.PHONY: build publish release
 
 # Build distribution packages
 build:
@@ -13,3 +13,6 @@ build:
 publish: build
 	@echo "Publishing to PyPI..."
 	twine upload dist/*
+
+# Alias for publish (for consistency across projects)
+release: publish

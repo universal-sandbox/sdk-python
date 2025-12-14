@@ -28,7 +28,7 @@ class RawCodeInterpreterClient:
         *,
         provider: typing.Optional[SandboxProvider] = OMIT,
         region: typing.Optional[str] = OMIT,
-        timeout_minutes: typing.Optional[int] = OMIT,
+        timeout: typing.Optional[int] = OMIT,
         metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SandboxResponse]:
@@ -43,8 +43,8 @@ class RawCodeInterpreterClient:
         region : typing.Optional[str]
             Preferred region for the sandbox
 
-        timeout_minutes : typing.Optional[int]
-            Custom timeout in minutes
+        timeout : typing.Optional[int]
+            Timeout in minutes
 
         metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Additional metadata
@@ -63,7 +63,7 @@ class RawCodeInterpreterClient:
             json={
                 "provider": provider,
                 "region": region,
-                "timeout_minutes": timeout_minutes,
+                "timeout": timeout,
                 "metadata": metadata,
             },
             headers={
@@ -176,7 +176,7 @@ class AsyncRawCodeInterpreterClient:
         *,
         provider: typing.Optional[SandboxProvider] = OMIT,
         region: typing.Optional[str] = OMIT,
-        timeout_minutes: typing.Optional[int] = OMIT,
+        timeout: typing.Optional[int] = OMIT,
         metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SandboxResponse]:
@@ -191,8 +191,8 @@ class AsyncRawCodeInterpreterClient:
         region : typing.Optional[str]
             Preferred region for the sandbox
 
-        timeout_minutes : typing.Optional[int]
-            Custom timeout in minutes
+        timeout : typing.Optional[int]
+            Timeout in minutes
 
         metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Additional metadata
@@ -211,7 +211,7 @@ class AsyncRawCodeInterpreterClient:
             json={
                 "provider": provider,
                 "region": region,
-                "timeout_minutes": timeout_minutes,
+                "timeout": timeout,
                 "metadata": metadata,
             },
             headers={
