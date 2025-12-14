@@ -29,12 +29,16 @@ class SandboxesClient:
         """
         return self._raw_client
 
-    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> SandboxListResponse:
+    def list(
+        self, *, include_deleted: typing.Optional[bool] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> SandboxListResponse:
         """
         List all sandboxes for the authenticated user.
 
         Parameters
         ----------
+        include_deleted : typing.Optional[bool]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -52,7 +56,7 @@ class SandboxesClient:
         )
         client.sandboxes.list()
         """
-        _response = self._raw_client.list(request_options=request_options)
+        _response = self._raw_client.list(include_deleted=include_deleted, request_options=request_options)
         return _response.data
 
     def get(self, sandbox_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> SandboxResponse:
@@ -177,12 +181,16 @@ class AsyncSandboxesClient:
         """
         return self._raw_client
 
-    async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> SandboxListResponse:
+    async def list(
+        self, *, include_deleted: typing.Optional[bool] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> SandboxListResponse:
         """
         List all sandboxes for the authenticated user.
 
         Parameters
         ----------
+        include_deleted : typing.Optional[bool]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -208,7 +216,7 @@ class AsyncSandboxesClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(request_options=request_options)
+        _response = await self._raw_client.list(include_deleted=include_deleted, request_options=request_options)
         return _response.data
 
     async def get(self, sandbox_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> SandboxResponse:

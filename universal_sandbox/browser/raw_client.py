@@ -26,7 +26,7 @@ class RawBrowserClient:
         *,
         provider: typing.Optional[SandboxProvider] = OMIT,
         region: typing.Optional[str] = OMIT,
-        timeout_minutes: typing.Optional[int] = OMIT,
+        timeout: typing.Optional[int] = OMIT,
         metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SandboxResponse]:
@@ -41,8 +41,8 @@ class RawBrowserClient:
         region : typing.Optional[str]
             Preferred region for the sandbox
 
-        timeout_minutes : typing.Optional[int]
-            Custom timeout in minutes
+        timeout : typing.Optional[int]
+            Timeout in minutes
 
         metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Additional metadata
@@ -61,7 +61,7 @@ class RawBrowserClient:
             json={
                 "provider": provider,
                 "region": region,
-                "timeout_minutes": timeout_minutes,
+                "timeout": timeout,
                 "metadata": metadata,
             },
             headers={
@@ -106,7 +106,7 @@ class AsyncRawBrowserClient:
         *,
         provider: typing.Optional[SandboxProvider] = OMIT,
         region: typing.Optional[str] = OMIT,
-        timeout_minutes: typing.Optional[int] = OMIT,
+        timeout: typing.Optional[int] = OMIT,
         metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SandboxResponse]:
@@ -121,8 +121,8 @@ class AsyncRawBrowserClient:
         region : typing.Optional[str]
             Preferred region for the sandbox
 
-        timeout_minutes : typing.Optional[int]
-            Custom timeout in minutes
+        timeout : typing.Optional[int]
+            Timeout in minutes
 
         metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Additional metadata
@@ -141,7 +141,7 @@ class AsyncRawBrowserClient:
             json={
                 "provider": provider,
                 "region": region,
-                "timeout_minutes": timeout_minutes,
+                "timeout": timeout,
                 "metadata": metadata,
             },
             headers={

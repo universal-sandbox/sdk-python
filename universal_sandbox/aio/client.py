@@ -32,7 +32,7 @@ class AioClient:
         *,
         provider: typing.Optional[SandboxProvider] = OMIT,
         region: typing.Optional[str] = OMIT,
-        timeout_minutes: typing.Optional[int] = OMIT,
+        timeout: typing.Optional[int] = OMIT,
         metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SandboxResponse:
@@ -47,8 +47,8 @@ class AioClient:
         region : typing.Optional[str]
             Preferred region for the sandbox
 
-        timeout_minutes : typing.Optional[int]
-            Custom timeout in minutes
+        timeout : typing.Optional[int]
+            Timeout in minutes
 
         metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Additional metadata
@@ -71,11 +71,7 @@ class AioClient:
         client.aio.create()
         """
         _response = self._raw_client.create(
-            provider=provider,
-            region=region,
-            timeout_minutes=timeout_minutes,
-            metadata=metadata,
-            request_options=request_options,
+            provider=provider, region=region, timeout=timeout, metadata=metadata, request_options=request_options
         )
         return _response.data
 
@@ -100,7 +96,7 @@ class AsyncAioClient:
         *,
         provider: typing.Optional[SandboxProvider] = OMIT,
         region: typing.Optional[str] = OMIT,
-        timeout_minutes: typing.Optional[int] = OMIT,
+        timeout: typing.Optional[int] = OMIT,
         metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SandboxResponse:
@@ -115,8 +111,8 @@ class AsyncAioClient:
         region : typing.Optional[str]
             Preferred region for the sandbox
 
-        timeout_minutes : typing.Optional[int]
-            Custom timeout in minutes
+        timeout : typing.Optional[int]
+            Timeout in minutes
 
         metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Additional metadata
@@ -147,10 +143,6 @@ class AsyncAioClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
-            provider=provider,
-            region=region,
-            timeout_minutes=timeout_minutes,
-            metadata=metadata,
-            request_options=request_options,
+            provider=provider, region=region, timeout=timeout, metadata=metadata, request_options=request_options
         )
         return _response.data
