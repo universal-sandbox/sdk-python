@@ -1,4 +1,8 @@
-.PHONY: build publish release
+.PHONY: build publish release test
+
+# Run tests
+test:
+	pytest test/ -v
 
 # Build distribution packages
 build:
