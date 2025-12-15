@@ -53,7 +53,7 @@ print()
 
 # ---------- E2B sandbox -------------- #
 # Create a code interpreter sandbox
-sb = sandbox.code_interpreter.create(provider="e2b", timeout_minutes=1)
+sb = sandbox.code_interpreter.create(provider="e2b", timeout=1)
 print(f"Sandbox ID: {sb.id}")
 
 # Execute code
