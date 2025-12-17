@@ -8,7 +8,7 @@ long_description = readme_file.read_text(encoding="utf-8") if readme_file.exists
 
 setup(
     name="universal-sandbox",
-    version="0.0.9",
+    version="0.0.10",
     description="Python SDK for Universal Sandbox API",
     long_description=long_description,
     long_description_content_type="text/markdown",
