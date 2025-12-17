@@ -14,8 +14,9 @@ OMIT = typing.cast(typing.Any, ...)
 
 
 class CodeInterpreterClient:
-    def __init__(self, *, client_wrapper: SyncClientWrapper):
+    def __init__(self, *, client_wrapper: SyncClientWrapper, parent_client: typing.Any = None):
         self._raw_client = RawCodeInterpreterClient(client_wrapper=client_wrapper)
+        self._parent_client = parent_client
 
     @property
     def with_raw_response(self) -> RawCodeInterpreterClient:
@@ -74,7 +75,12 @@ class CodeInterpreterClient:
         _response = self._raw_client.create(
             provider=provider, region=region, timeout=timeout, metadata=metadata, request_options=request_options
         )
-        return _response.data
+        
+        sandbox = _response.data
+        # Inject parent client reference for convenience methods
+        if self._parent_client is not None:
+            sandbox._client = self._parent_client
+        return sandbox
 
     def execute(
         self,
@@ -120,12 +126,18 @@ class CodeInterpreterClient:
         _response = self._raw_client.execute(
             sandbox_id, command=command, timeout=timeout, request_options=request_options
         )
-        return _response.data
+        
+        sandbox = _response.data
+        # Inject parent client reference for convenience methods
+        if self._parent_client is not None:
+            sandbox._client = self._parent_client
+        return sandbox
 
 
 class AsyncCodeInterpreterClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+    def __init__(self, *, client_wrapper: AsyncClientWrapper, parent_client: typing.Any = None):
         self._raw_client = AsyncRawCodeInterpreterClient(client_wrapper=client_wrapper)
+        self._parent_client = parent_client
 
     @property
     def with_raw_response(self) -> AsyncRawCodeInterpreterClient:
@@ -192,7 +204,12 @@ class AsyncCodeInterpreterClient:
         _response = await self._raw_client.create(
             provider=provider, region=region, timeout=timeout, metadata=metadata, request_options=request_options
         )
-        return _response.data
+        
+        sandbox = _response.data
+        # Inject parent client reference for convenience methods
+        if self._parent_client is not None:
+            sandbox._client = self._parent_client
+        return sandbox
 
     async def execute(
         self,
@@ -246,4 +263,9 @@ class AsyncCodeInterpreterClient:
         _response = await self._raw_client.execute(
             sandbox_id, command=command, timeout=timeout, request_options=request_options
         )
-        return _response.data
+        
+        sandbox = _response.data
+        # Inject parent client reference for convenience methods
+        if self._parent_client is not None:
+            sandbox._client = self._parent_client
+        return sandbox

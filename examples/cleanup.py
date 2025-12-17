@@ -24,6 +24,8 @@ else:
     # Delete all sandboxes
     for s in sandbox_list.sandboxes:
         print(f"Deleting sandbox: {s.id}")
+        print(f"  Provider: {s.provider}")
+        print(f"  Type: {s.type}")
         resp = sandbox.sandboxes.delete(s.id)
         print(f"  Response: {resp}")
         print()

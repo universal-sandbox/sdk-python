@@ -82,9 +82,9 @@ class Sandbox:
             timeout=_defaulted_timeout,
         )
         self._raw_client = RawSandbox(client_wrapper=self._client_wrapper)
-        self.code_interpreter = CodeInterpreterClient(client_wrapper=self._client_wrapper)
-        self.browser = BrowserClient(client_wrapper=self._client_wrapper)
-        self.aio = AioClient(client_wrapper=self._client_wrapper)
+        self.code_interpreter = CodeInterpreterClient(client_wrapper=self._client_wrapper, parent_client=self)
+        self.browser = BrowserClient(client_wrapper=self._client_wrapper, parent_client=self)
+        self.aio = AioClient(client_wrapper=self._client_wrapper, parent_client=self)
         self.sandboxes = SandboxesClient(client_wrapper=self._client_wrapper)
         self.tokens = TokensClient(client_wrapper=self._client_wrapper)
 
@@ -244,9 +244,9 @@ class AsyncSandbox:
             timeout=_defaulted_timeout,
         )
         self._raw_client = AsyncRawSandbox(client_wrapper=self._client_wrapper)
-        self.code_interpreter = AsyncCodeInterpreterClient(client_wrapper=self._client_wrapper)
-        self.browser = AsyncBrowserClient(client_wrapper=self._client_wrapper)
-        self.aio = AsyncAioClient(client_wrapper=self._client_wrapper)
+        self.code_interpreter = AsyncCodeInterpreterClient(client_wrapper=self._client_wrapper, parent_client=self)
+        self.browser = AsyncBrowserClient(client_wrapper=self._client_wrapper, parent_client=self)
+        self.aio = AsyncAioClient(client_wrapper=self._client_wrapper, parent_client=self)
         self.sandboxes = AsyncSandboxesClient(client_wrapper=self._client_wrapper)
         self.tokens = AsyncTokensClient(client_wrapper=self._client_wrapper)
 
