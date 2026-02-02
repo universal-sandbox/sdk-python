@@ -2,4 +2,4 @@
 
 import typing
 
-SandboxProvider = typing.Union[typing.Literal["e2b", "volcengine", "aws", "alibaba"], typing.Any]
+SandboxProvider = typing.Union[typing.Literal["e2b", "volcengine", "aws", "alibaba", "vercel"], typing.Any]
