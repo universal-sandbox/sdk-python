@@ -2,6 +2,8 @@
 
 Python SDK for Universal Sandbox API.
 
+📦 **[PyPI Package](https://pypi.org/project/universal-sandbox/)**
+
 📖 **[API Documentation](https://api.sandbox.ai-infra.org/docs)**
 
 ## Installation
